@@ -119,23 +119,22 @@ st.divider()
 
 st.markdown("**Ask a clinical question**")
 
-if "question_input" not in st.session_state:
-    st.session_state.question_input = ""
+if "question_value" not in st.session_state:
+    st.session_state.question_value = ""
 
 question = st.text_area(
     label="question",
-    value=st.session_state.question_input,
+    value=st.session_state.question_value,
     placeholder="e.g. What were the most common adverse events reported?",
     height=90,
     label_visibility="collapsed",
-    key="question_input",
 )
 
 st.markdown("**Example questions:**")
 cols = st.columns(4)
 for i, eq in enumerate(EXAMPLE_QUESTIONS):
     if cols[i % 4].button(eq[:45] + "…" if len(eq) > 45 else eq, key=f"eq_{i}", use_container_width=True):
-        st.session_state.question_input = eq
+        st.session_state.question_value = eq
         st.rerun()
 
 st.markdown("")
