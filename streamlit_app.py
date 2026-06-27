@@ -16,7 +16,11 @@ def check_password():
     if not st.session_state.authenticated:
         st.text_input("Password", type="password", key="pwd_input")
         if st.button("Login"):
-            if st.session_state.pwd_input == st.secrets.get("APP_PASSWORD", ""):
+            try:
+            app_password = st.secrets["APP_PASSWORD"]
+        except Exception:
+            app_password = os.environ.get("APP_PASSWORD", "")
+        if st.session_state.pwd_input == app_password:
                 st.session_state.authenticated = True
                 st.rerun()
             else:
