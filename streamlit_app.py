@@ -9,6 +9,23 @@ try:
 except (KeyError, Exception):
     API_URL = os.environ.get("API_URL", "")
 
+
+def check_password():
+    if "authenticated" not in st.session_state:
+        st.session_state.authenticated = False
+    if not st.session_state.authenticated:
+        st.text_input("Password", type="password", key="pwd_input")
+        if st.button("Login"):
+            if st.session_state.pwd_input == st.secrets.get("APP_PASSWORD", ""):
+                st.session_state.authenticated = True
+                st.rerun()
+            else:
+                st.error("Incorrect password")
+        st.stop()
+
+
+check_password()
+
 EXAMPLE_QUESTIONS = [
     "What was the primary endpoint result in the study?",
     "What were the most common adverse events reported?",
