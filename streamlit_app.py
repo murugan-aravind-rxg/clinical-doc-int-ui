@@ -154,13 +154,13 @@ if ask and question.strip():
             resp.raise_for_status()
             data = resp.json()
         except requests.exceptions.Timeout:
-            st.error("Request timed out. The service may be starting up — try again in 30 seconds.")
+            st.error("Service unavailable. Please try again later.")
             st.stop()
         except requests.exceptions.ConnectionError:
-            st.error("Could not connect to the API. Check that the service is running.")
+            st.error("Service unavailable. Please try again later.")
             st.stop()
-        except Exception as e:
-            st.error(f"Error: {e}")
+        except Exception:
+            st.error("Service unavailable. Please try again later.")
             st.stop()
 
     st.divider()
